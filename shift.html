@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autoplay Video</title>
+    <title>Autoplay Video mit Sound</title>
     <style>
         * {
             margin: 0;
@@ -26,6 +26,16 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             let video = document.getElementById("video");
+            video.volume = 1.0; // Maximale Lautstärke setzen
+            video.play().catch(err => {
+                console.warn("Autoplay mit Sound wurde blockiert:", err);
+                // Falls Autoplay blockiert wurde, einen Klick-Listener hinzufügen
+                document.body.addEventListener("click", () => {
+                    video.play();
+                    document.body.removeEventListener("click", arguments.callee);
+                });
+            });
+
             video.requestFullscreen().catch(err => {
                 console.warn("Vollbildmodus konnte nicht aktiviert werden:", err);
             });
@@ -33,4 +43,3 @@
     </script>
 </body>
 </html>
-
