@@ -16,14 +16,19 @@
             height: 100vh;
             object-fit: cover;
         }
-        button {
+        #playButton {
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            padding: 10px 20px;
+            padding: 15px 25px;
             font-size: 18px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 10px;
             cursor: pointer;
+            z-index: 10;
         }
     </style>
 </head>
@@ -32,7 +37,7 @@
         <source src="https://dn720409.ca.archive.org/0/items/macbook-air-15-2023/Zeiger%2030.mp4">
         Dein Browser unterstützt kein HTML5-Video.
     </video>
-    <button id="playButton">Ton aktivieren</button>
+    <button id="playButton">🔊 Ton aktivieren</button>
     
     <script>
         document.addEventListener("DOMContentLoaded", () => {
@@ -45,11 +50,16 @@
                 button.style.display = "none"; // Button ausblenden
             });
 
-            // Versuch, das Video im Vollbildmodus zu starten (optional)
-            video.requestFullscreen().catch(err => {
-                console.warn("Vollbildmodus konnte nicht aktiviert werden:", err);
+            // Automatischer Vollbildmodus versuchen (optional)
+            document.body.addEventListener("click", () => {
+                if (document.fullscreenElement === null) {
+                    video.requestFullscreen().catch(err => {
+                        console.warn("Vollbildmodus konnte nicht aktiviert werden:", err);
+                    });
+                }
             });
         });
     </script>
 </body>
 </html>
+
