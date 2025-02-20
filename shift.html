@@ -3,26 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video Loop</title>
+    <title>Autoplay Video</title>
     <style>
-        body {
+        * {
             margin: 0;
-            background: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            padding: 0;
+            overflow: hidden;
         }
         video {
-            width: 100%;
-            height: auto;
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+        #playButton {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 15px 25px;
+            font-size: 18px;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 10;
         }
     </style>
 </head>
 <body>
-    <video autoplay loop>
-        <source src="shift.mp4" type="video/mp4">
+    <video id="video" autoplay loop playsinline>
+        <source src="shift.mp4">
         Dein Browser unterstützt kein HTML5-Video.
     </video>
+    <button id="playButton">🔊 Ton aktivieren</button>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let video = document.getElementById("video");
+            let button = document.getElementById("playButton");
+
+            button.addEventListener("click", () => {
+                video.muted = false;
+                video.play();
+                button.style.display = "none"; // Button ausblenden
+            });
+
+            // Automatischer Vollbildmodus versuchen (optional)
+            document.body.addEventListener("click", () => {
+                if (document.fullscreenElement === null) {
+                    video.requestFullscreen().catch(err => {
+                        console.warn("Vollbildmodus konnte nicht aktiviert werden:", err);
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
