@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autoplay Video mit Sound</title>
+    <title>Autoplay Video</title>
     <style>
         * {
             margin: 0;
@@ -19,23 +19,13 @@
     </style>
 </head>
 <body>
-    <video id="video" autoplay loop playsinline>
-        <source src="Thejocraft SHIFT Song Musikvideo  TJC Fanseite.mp4">
+    <video id="video" autoplay loop muted playsinline>
+        <source src="https://www.apple.com/assets-www/en_WW/ipad/welcome/x12a63905d_large.mp4">
         Dein Browser unterstützt kein HTML5-Video.
     </video>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             let video = document.getElementById("video");
-            video.volume = 1.0; // Maximale Lautstärke setzen
-            video.play().catch(err => {
-                console.warn("Autoplay mit Sound wurde blockiert:", err);
-                // Falls Autoplay blockiert wurde, einen Klick-Listener hinzufügen
-                document.body.addEventListener("click", () => {
-                    video.play();
-                    document.body.removeEventListener("click", arguments.callee);
-                });
-            });
-
             video.requestFullscreen().catch(err => {
                 console.warn("Vollbildmodus konnte nicht aktiviert werden:", err);
             });
