@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autoplay Video</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        video {
+            position: absolute;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+    <video id="video" autoplay loop muted playsinline>
+        <source src="https://archive.org/details/macbook-air-15-2023/Zeiger+30.mp4">
+        Dein Browser unterstützt kein HTML5-Video.
+    </video>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            let video = document.getElementById("video");
+            video.requestFullscreen().catch(err => {
+                console.warn("Vollbildmodus konnte nicht aktiviert werden:", err);
+            });
+        });
+    </script>
+</body>
+</html>
