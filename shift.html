@@ -3,33 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Autoplay Video</title>
+    <title>Video Loop</title>
     <style>
-        * {
+        body {
             margin: 0;
-            padding: 0;
-            overflow: hidden;
+            background: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         video {
-            position: absolute;
-            width: 100vw;
-            height: 100vh;
-            object-fit: cover;
+            width: 100%;
+            height: auto;
         }
     </style>
 </head>
 <body>
-    <video id="video" autoplay loop playsinline>
-        <source src="shift.mp4">
+    <video autoplay loop>
+        <source src="shift.mp4" type="video/mp4">
         Dein Browser unterstützt kein HTML5-Video.
     </video>
-    <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            let video = document.getElementById("video");
-            video.requestFullscreen().catch(err => {
-                console.warn("Vollbildmodus konnte nicht aktiviert werden:", err);
-            });
-        });
-    </script>
 </body>
 </html>
