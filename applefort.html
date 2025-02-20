@@ -34,7 +34,6 @@
 </head>
 <body>
     <video id="video" autoplay muted playsinline>
-        <source id="videoSource" src="shift.mp4" type="video/mp4">
         Dein Browser unterstützt kein HTML5-Video.
     </video>
     <button id="playButton">🔊 Ton aktivieren</button>
@@ -42,21 +41,36 @@
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             let video = document.getElementById("video");
-            let source = document.getElementById("videoSource");
             let button = document.getElementById("playButton");
             
-            let videos = ["https://dn720409.ca.archive.org/0/items/macbook-air-15-2023/Zeiger%2030.mp", "shift.mp4", "cup.mp4", "https://dn720409.ca.archive.org/0/items/macbook-air-15-2023/Zeiger%2030.mp4"];
+            let videoPool = [
+                "https://dn720409.ca.archive.org/0/items/macbook-air-15-2023/Zeiger%2030.mp4",
+                "shift.mp4",
+                "cup.mp4",
+                "https://dn720409.ca.archive.org/0/items/macbook-air-15-2023/Zeiger%2030.mp4"
+            ];
+            
+            let videoQueue = shuffleArray([...videoPool]); // Zufällige Reihenfolge der Videos
+            let currentIndex = 0;
 
-            function getRandomVideo() {
-                let randomIndex = Math.floor(Math.random() * videos.length);
-                return videos[randomIndex];
+            function shuffleArray(array) {
+                for (let i = array.length - 1; i > 0; i--) {
+                    let j = Math.floor(Math.random() * (i + 1));
+                    [array[i], array[j]] = [array[j], array[i]];
+                }
+                return array;
             }
 
             function playNextVideo() {
-                let nextVideo = getRandomVideo();
-                source.src = nextVideo;
+                if (currentIndex >= videoQueue.length) {
+                    videoQueue = shuffleArray([...videoPool]); // Neue zufällige Reihenfolge
+                    currentIndex = 0;
+                }
+
+                video.src = videoQueue[currentIndex]; 
                 video.load();
                 video.play();
+                currentIndex++;
             }
 
             button.addEventListener("click", () => {
@@ -66,6 +80,9 @@
             });
 
             video.addEventListener("ended", playNextVideo);
+
+            // Direkt beim Laden ein zufälliges Video starten
+            playNextVideo();
         });
     </script>
 </body>
