@@ -51,6 +51,7 @@
             });
 
             // Automatischer Vollbildmodus versuchen
+        
             document.body.addEventListener("click", () => {
                 if (document.fullscreenElement === null) {
                     video.requestFullscreen().catch(err => {
